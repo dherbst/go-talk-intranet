@@ -15,7 +15,7 @@ A while ago I spoke about creating a static website deployed to AppEngine that h
 authentication turned on so only people from your google apps domain can get to the
 website.
 
-.link http://github.com/dherbst/go-talk-appengine github.com/dherbst/go-talk-appengine
+.link http://github.com/dherbst/go-lightning-appengine github.com/dherbst/go-lightning-appengine
 
 summary:
  - create an AppEngine app,
