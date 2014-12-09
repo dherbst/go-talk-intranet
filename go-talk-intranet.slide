@@ -21,7 +21,7 @@ summary:
  - create an AppEngine app,
  - lock to domain account,
  - upload static files
- - profit$
+ - $.profit()
 
 * That's great, but now everyone wants some other features:
 
@@ -113,3 +113,19 @@ So create a fakehandler to bootstrap, or you can put a function in `func init()`
 * Once you have one in locally, you can add it via the Datastore Viewer
 
 .image dataviewer.png
+
+* Now write your handler to query the Person entity and return them as json
+
+.code 02people.go
+
+* Write some angular to call the api
+
+.code 03callapi.js
+
+* Here is how to display and filter it
+
+.code 03angular.html
+
+* It looks like this
+
+.image 04filter.png
