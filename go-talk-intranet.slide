@@ -1,0 +1,69 @@
+GoLangPhilly - Creating an intranet in go
+Intranet in go with Appengine
+9 Dec 2014
+Tags: golang, intranet, go, AppEngine
+
+Darrel Herbst
+DramaFever
+dherbst@gmail.com
+http://github.com/dherbst
+@darrelherbst
+
+* GoLangPhilly - Creating an intranet in go
+
+A while ago I spoke about creating a static website deployed to AppEngine that has
+authentication turned on so only people from your google apps domain can get to the
+website.
+
+.link http://github.com/dherbst/go-talk-appengine github.com/dherbst/go-talk-appengine
+
+summary:
+ - create an AppEngine app,
+ - lock to domain account,
+ - upload static files
+ - profit$
+
+* That's great, but now everyone wants some other features:
+
+  1. How about an intranet company directory?
+  2. How about some Calendar events?
+  3. How about a news article, or some kind of alert?
+  4. I have to generate a pull request to make changes?  What are you crazy?
+     Ever heard of wordpress, I can change things with a few clicks.  Make
+     it that easy or go home.
+
+* Company Directory
+
+Google Apps includes a company directory by default, but it isn't pretty, and it is hard to add metadata along with it.
+
+.image apps_directory.png
+
+* The go team is autogenerating go code for all the google apis
+
+    go get code.google.com/p/google-api-go-client/admin/directory_v1
+
+The documentation isn't that easy to just `go get` and run.  You have to obtain an api key, and convert it to a `pem` format.
+
+.image goapi.png
+
+* To use the google-api-go-client you have to do the following:
+
+  1. Create a project in the api console https://console.developers.google.com/project?authuser=0
+
+  2. Turn on the API you want to use - for us the list of users in the domain is the "Admin SDK"
+
+     https://console.developers.google.com/project/dramafeveremployee/apiui/api?authuser=0
+
+  3. Create a service account under the project permissions, this is the username you use for the
+     iss below.
+
+  4. Under credentials, you will find a button to "generate new P12 key"
+
+  5. Convert the p12 to a pem with the following:
+
+     openssl pkcs12 -in empbrowser-586d3e7656f9.p12 -nocerts -passin pass:notasecret
+        -nodes -out empbrowser.pem
+
+* Now you can connect and get a list of users...
+
+.code emplist.go
