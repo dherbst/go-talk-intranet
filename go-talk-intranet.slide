@@ -67,3 +67,39 @@ The documentation isn't that easy to just `go get` and run.  You have to obtain 
 * Now you can connect and get a list of users...
 
 .code emplist.go
+
+* And there's paging...
+
+	if users.NextPageToken != "" {
+		// call again with the page token
+		listcall.PageToken(users.NextPageToken)
+
+		users, err := listcall.Do()
+		if err != nil {
+			fmt.Printf("Got error %v\n", err)
+			return
+		}
+		numUsers = len(users.Users)
+		for i, u := range users.Users {
+			fmt.Printf("u.fullName=%v\nu.primaryEmail=%v\nu.thumbnailPhotoUrl=%v\nPhone=%v\n",
+			           u.Name.FullName, u.PrimaryEmail, u.ThumbnailPhotoUrl, u.Phones,
+			)
+
+
+* Now you want to add metadata
+
+	type Person struct {
+		Name         string `json:"name"`
+		Email        string `json:"email"` // this is the key
+		Phone        string `json:"phone"`
+		Manager      string `json:"manager"`
+		Department   string `json:"department"`
+		Office       string `json:"office"`
+		Title        string `json:"title"`
+		ThumbnailUrl string `json:"img"`
+	}
+
+Store this in the AppEngine datastore.
+
+	key := datastore.NewKey(context, "Person", p.Email, 0, nil)
+	_, err := datastore.Put(context, p.Email, p)
