@@ -103,3 +103,13 @@ Store this in the AppEngine datastore.
 
 	key := datastore.NewKey(context, "Person", p.Email, 0, nil)
 	_, err := datastore.Put(context, p.Email, p)
+
+* When working locally, you cannot use the interactive console
+
+So create a fakehandler to bootstrap, or you can put a function in `func init()` that checks some seed data.  Once you do this, you can use the Datastore Viewer to add data.
+
+.code 3.addperson.go
+
+* Once you have one in locally, you can add it via the Datastore Viewer
+
+.image dataviewer.png
